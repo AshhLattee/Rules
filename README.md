@@ -187,9 +187,11 @@ Copyright (C) 2026 AshhLattee
 
 ## 👤 Author
 
-**AshhLattee**
+**AshhLattee** - AI-Augmented Engineer
 - GitHub: [@AshhLattee](https://github.com/AshhLattee)
 - Discord: AshhLattee
+
+*This project was developed with AI assistance as part of modern AI-augmented engineering practices.*
 
 ## 🐛 Report Violations
 
@@ -203,4 +205,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 ---
 
-**Made with ❤️ by AshhLattee | Free Forever | Open Source**
+**Made with ❤️ by AshhLattee (AI-Augmented Engineer) | Free Forever | Open Source**
+
+*Developed with AI assistance*

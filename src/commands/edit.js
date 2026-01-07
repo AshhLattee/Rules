@@ -35,7 +35,6 @@ module.exports = {
                 categories.map(cat => ({
                     label: cat.label,
                     value: cat.id,
-                    description: cat.description,
                     emoji: cat.emoji || undefined
                 }))
             );

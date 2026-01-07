@@ -75,14 +75,6 @@ async function handleEditSelect(interaction, categoryId) {
         .setRequired(true)
         .setMaxLength(100);
 
-    const descriptionInput = new TextInputBuilder()
-        .setCustomId('category_description')
-        .setLabel('Description')
-        .setStyle(TextInputStyle.Short)
-        .setValue(category.description)
-        .setRequired(true)
-        .setMaxLength(100);
-
     const emojiInput = new TextInputBuilder()
         .setCustomId('category_emoji')
         .setLabel('Emoji')
@@ -101,7 +93,6 @@ async function handleEditSelect(interaction, categoryId) {
 
     modal.addComponents(
         new ActionRowBuilder().addComponents(labelInput),
-        new ActionRowBuilder().addComponents(descriptionInput),
         new ActionRowBuilder().addComponents(emojiInput),
         new ActionRowBuilder().addComponents(rulesInput)
     );

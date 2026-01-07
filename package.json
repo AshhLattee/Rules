@@ -8,7 +8,7 @@
     "dev": "node --watch src/index.js"
   },
   "keywords": ["discord", "bot", "rules", "components-v2"],
-  "author": "AshhLattee",
+  "author": "AshhLattee (AI-Augmented Engineer)",
   "license": "GPL-3.0",
   "dependencies": {
     "discord.js": "^14.17.3",

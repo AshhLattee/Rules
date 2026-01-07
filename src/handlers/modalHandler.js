@@ -19,6 +19,8 @@ module.exports = {
             await handleAddCategory(interaction);
         } else if (interaction.customId.startsWith('edit_category_')) {
             await handleEditCategory(interaction);
+        } else if (interaction.customId === 'set_main_message') {
+            await handleSetMainMessage(interaction);
         }
     }
 };
@@ -26,7 +28,6 @@ module.exports = {
 async function handleAddCategory(interaction) {
     const id = interaction.fields.getTextInputValue('category_id').toLowerCase().replace(/\s+/g, '_');
     const label = interaction.fields.getTextInputValue('category_label');
-    const description = interaction.fields.getTextInputValue('category_description');
     const emoji = interaction.fields.getTextInputValue('category_emoji') || null;
     const rulesText = interaction.fields.getTextInputValue('category_rules');
 
@@ -46,7 +47,6 @@ async function handleAddCategory(interaction) {
     const category = {
         id,
         label,
-        description,
         emoji,
         rules,
         color: 0x5865F2
@@ -83,7 +83,6 @@ async function handleEditCategory(interaction) {
     }
 
     const label = interaction.fields.getTextInputValue('category_label');
-    const description = interaction.fields.getTextInputValue('category_description');
     const emoji = interaction.fields.getTextInputValue('category_emoji') || null;
     const rulesText = interaction.fields.getTextInputValue('category_rules');
 
@@ -91,7 +90,6 @@ async function handleEditCategory(interaction) {
 
     const updatedCategory = {
         label,
-        description,
         emoji,
         rules
     };
@@ -111,6 +109,28 @@ async function handleEditCategory(interaction) {
 
     await interaction.reply({
         content: `✅ Category **${label}** updated successfully!`,
+        flags: MessageFlags.Ephemeral
+    });
+}
+
+async function handleSetMainMessage(interaction) {
+    const mainMessage = interaction.fields.getTextInputValue('main_message');
+
+    rulesManager.setConfig({ mainMessage });
+
+    // Update the rules message
+    const config = rulesManager.getConfig();
+    if (config.channelId) {
+        try {
+            const channel = await interaction.client.channels.fetch(config.channelId);
+            await deployRulesMessage(channel);
+        } catch (error) {
+            console.error('Error updating rules message:', error);
+        }
+    }
+
+    await interaction.reply({
+        content: '✅ Main message updated successfully!',
         flags: MessageFlags.Ephemeral
     });
 }
