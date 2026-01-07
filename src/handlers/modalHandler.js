@@ -30,9 +30,8 @@ async function handleAddCategory(interaction) {
     const label = interaction.fields.getTextInputValue('category_label');
     const rulesText = interaction.fields.getTextInputValue('category_rules');
     
-    // Get uploaded thumbnail file
-    const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
-    const thumbnail = thumbnailFiles && thumbnailFiles.length > 0 ? thumbnailFiles[0].url : null;
+    // Get thumbnail URL from text input
+    const thumbnail = interaction.fields.getTextInputValue('category_thumbnail') || null;
 
     // Check if category already exists
     const existing = rulesManager.getCategory(id);
@@ -88,9 +87,9 @@ async function handleEditCategory(interaction) {
     const label = interaction.fields.getTextInputValue('category_label');
     const rulesText = interaction.fields.getTextInputValue('category_rules');
     
-    // Get uploaded thumbnail file (if any), otherwise keep existing
-    const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
-    const thumbnail = thumbnailFiles && thumbnailFiles.length > 0 ? thumbnailFiles[0].url : category.thumbnail;
+    // Get thumbnail URL from text input (if provided), otherwise keep existing
+    const thumbnailInput = interaction.fields.getTextInputValue('category_thumbnail');
+    const thumbnail = thumbnailInput ? thumbnailInput : category.thumbnail;
 
     const rules = rulesText.split('\n').filter(line => line.trim()).map(line => line.trim());
 
@@ -122,9 +121,8 @@ async function handleEditCategory(interaction) {
 async function handleSetMainMessage(interaction) {
     const mainMessage = interaction.fields.getTextInputValue('main_message');
     
-    // Get uploaded image file (if any)
-    const imageFiles = interaction.fields.getUploadedFiles('main_image');
-    const mainImage = imageFiles && imageFiles.length > 0 ? imageFiles[0].url : null;
+    // Get image URL from text input
+    const mainImage = interaction.fields.getTextInputValue('main_image') || null;
 
     rulesManager.setConfig({ mainMessage, mainImage });
 

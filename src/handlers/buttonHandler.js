@@ -36,21 +36,27 @@ async function handleViewRules(interaction) {
     const rulesText = category.rules.map((rule, i) => `${i + 1}. ${rule}`).join('\n');
 
     const container = new ContainerBuilder()
-        .setAccentColor(category.color || 0x5865F2)
-        .addTextDisplayComponents((text) =>
+        .setAccentColor(category.color || 0x5865F2);
+    
+    // Add category label with thumbnail as section
+    container.addSectionComponents((section) => {
+        section.addTextDisplayComponents((text) =>
             text.setContent(`**${category.label}**`)
-        )
+        );
+        
+        // Add thumbnail if provided
+        if (category.thumbnail) {
+            section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(category.thumbnail));
+        }
+        
+        return section;
+    });
+    
+    container
         .addSeparatorComponents((separator) => separator)
         .addTextDisplayComponents((text) =>
             text.setContent(rulesText)
         );
-    
-    // Add thumbnail if provided (as a media gallery)
-    if (category.thumbnail) {
-        container.addMediaGalleryComponents((gallery) => 
-            gallery.addMediaComponents((media) => media.setURL(category.thumbnail))
-        );
-    }
 
     await interaction.reply({
         components: [container],

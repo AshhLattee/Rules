@@ -9,9 +9,7 @@ const {
     ModalBuilder, 
     TextInputBuilder, 
     TextInputStyle, 
-    ActionRowBuilder,
-    FileUploadBuilder,
-    LabelBuilder
+    ActionRowBuilder
 } = require('discord.js');
 
 module.exports = {
@@ -49,24 +47,20 @@ module.exports = {
             .setRequired(true)
             .setMaxLength(4000);
 
-        const thumbnailUpload = new FileUploadBuilder()
+        const thumbnailInput = new TextInputBuilder()
             .setCustomId('category_thumbnail')
+            .setLabel('Thumbnail URL (optional)')
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder('https://i.imgur.com/example.png')
             .setRequired(false)
-            .setMinValues(0)
-            .setMaxValues(1);
-
-        const thumbnailLabel = new LabelBuilder()
-            .setLabel('Thumbnail (optional)')
-            .setDescription('Upload a thumbnail for this category')
-            .setFileUploadComponent(thumbnailUpload);
+            .setMaxLength(500);
 
         modal.addComponents(
             new ActionRowBuilder().addComponents(idInput),
             new ActionRowBuilder().addComponents(labelInput),
-            new ActionRowBuilder().addComponents(rulesInput)
+            new ActionRowBuilder().addComponents(rulesInput),
+            new ActionRowBuilder().addComponents(thumbnailInput)
         );
-        
-        modal.addLabelComponents(thumbnailLabel);
 
         await interaction.showModal(modal);
     }

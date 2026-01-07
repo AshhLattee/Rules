@@ -21,17 +21,21 @@ async function createRulesMessage() {
     const mainImage = config.mainImage;
 
     const container = new ContainerBuilder()
-        .setAccentColor(0x5865F2)
-        .addTextDisplayComponents((text) =>
+        .setAccentColor(0x5865F2);
+    
+    // Add main message with optional image as section
+    container.addSectionComponents((section) => {
+        section.addTextDisplayComponents((text) =>
             text.setContent(mainMessage)
         );
-    
-    // Add image if provided (as a media gallery component)
-    if (mainImage) {
-        container.addMediaGalleryComponents((gallery) => 
-            gallery.addMediaComponents((media) => media.setURL(mainImage))
-        );
-    }
+        
+        // Add main image as thumbnail if provided
+        if (mainImage) {
+            section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(mainImage));
+        }
+        
+        return section;
+    });
     
     container.addSeparatorComponents((separator) => separator);
 
