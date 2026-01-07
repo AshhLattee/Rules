@@ -1,0 +1,137 @@
+// Rules Menu Bot - Discord Rules Management System
+// Copyright (C) 2026 AshhLattee
+// Licensed under GPL-3.0 - see LICENSE file
+// GitHub: https://github.com/AshhLattee/rules-menu-bot
+
+const { 
+    EmbedBuilder, 
+    ModalBuilder, 
+    TextInputBuilder, 
+    TextInputStyle, 
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle
+} = require('discord.js');
+const rulesManager = require('../utils/rulesManager');
+const { deployRulesMessage } = require('../utils/messageBuilder');
+
+module.exports = {
+    async execute(interaction) {
+        const { customId, values } = interaction;
+
+        if (customId === 'rules_select') {
+            await handleRulesSelect(interaction, values[0]);
+        } else if (customId === 'edit_category_select') {
+            await handleEditSelect(interaction, values[0]);
+        } else if (customId === 'delete_category_select') {
+            await handleDeleteSelect(interaction, values[0]);
+        }
+    }
+};
+
+async function handleRulesSelect(interaction, categoryId) {
+    const category = rulesManager.getCategory(categoryId);
+
+    if (!category) {
+        return await interaction.reply({
+            content: '❌ Category not found!',
+            ephemeral: true
+        });
+    }
+
+    const embed = new EmbedBuilder()
+        .setTitle(`${category.emoji ? category.emoji + ' ' : ''}${category.label}`)
+        .setDescription(category.rules.map((rule, i) => `${i + 1}. ${rule}`).join('\n'))
+        .setColor(category.color || 0x5865F2)
+        .setFooter({ text: 'Server Rules' })
+        .setTimestamp();
+
+    await interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+    });
+}
+
+async function handleEditSelect(interaction, categoryId) {
+    const category = rulesManager.getCategory(categoryId);
+
+    if (!category) {
+        return await interaction.reply({
+            content: '❌ Category not found!',
+            ephemeral: true
+        });
+    }
+
+    const modal = new ModalBuilder()
+        .setCustomId(`edit_category_${categoryId}`)
+        .setTitle(`Edit: ${category.label}`);
+
+    const labelInput = new TextInputBuilder()
+        .setCustomId('category_label')
+        .setLabel('Category Label')
+        .setStyle(TextInputStyle.Short)
+        .setValue(category.label)
+        .setRequired(true)
+        .setMaxLength(100);
+
+    const descriptionInput = new TextInputBuilder()
+        .setCustomId('category_description')
+        .setLabel('Description')
+        .setStyle(TextInputStyle.Short)
+        .setValue(category.description)
+        .setRequired(true)
+        .setMaxLength(100);
+
+    const emojiInput = new TextInputBuilder()
+        .setCustomId('category_emoji')
+        .setLabel('Emoji')
+        .setStyle(TextInputStyle.Short)
+        .setValue(category.emoji || '')
+        .setRequired(false)
+        .setMaxLength(10);
+
+    const rulesInput = new TextInputBuilder()
+        .setCustomId('category_rules')
+        .setLabel('Rules (one per line)')
+        .setStyle(TextInputStyle.Paragraph)
+        .setValue(category.rules.join('\n'))
+        .setRequired(true)
+        .setMaxLength(4000);
+
+    modal.addComponents(
+        new ActionRowBuilder().addComponents(labelInput),
+        new ActionRowBuilder().addComponents(descriptionInput),
+        new ActionRowBuilder().addComponents(emojiInput),
+        new ActionRowBuilder().addComponents(rulesInput)
+    );
+
+    await interaction.showModal(modal);
+}
+
+async function handleDeleteSelect(interaction, categoryId) {
+    const category = rulesManager.getCategory(categoryId);
+
+    if (!category) {
+        return await interaction.reply({
+            content: '❌ Category not found!',
+            ephemeral: true
+        });
+    }
+
+    const confirmButton = new ButtonBuilder()
+        .setCustomId(`confirm_delete_${categoryId}`)
+        .setLabel('Confirm Delete')
+        .setStyle(ButtonStyle.Danger);
+
+    const cancelButton = new ButtonBuilder()
+        .setCustomId('cancel_delete')
+        .setLabel('Cancel')
+        .setStyle(ButtonStyle.Secondary);
+
+    const row = new ActionRowBuilder().addComponents(confirmButton, cancelButton);
+
+    await interaction.update({
+        content: `⚠️ Are you sure you want to delete **${category.label}**?\nThis action cannot be undone.`,
+        components: [row]
+    });
+}

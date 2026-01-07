@@ -1,0 +1,17 @@
+{
+  "name": "rules-menu-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot with interactive rules menu using Components v2",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": ["discord", "bot", "rules", "components-v2"],
+  "author": "AshhLattee",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.5"
+  }
+}
