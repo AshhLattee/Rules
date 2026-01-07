@@ -9,7 +9,7 @@
   },
   "keywords": ["discord", "bot", "rules", "components-v2"],
   "author": "AshhLattee (AI-Augmented Engineer)",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0 WITH Commons-Clause",
   "dependencies": {
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.5"

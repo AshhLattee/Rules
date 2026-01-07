@@ -4,7 +4,7 @@ A free, open-source Discord bot that provides an interactive rules menu using Di
 
 ## ⚠️ ANTI-RESALE NOTICE
 
-**This bot is FREE and open-source under GPL-3.0.**
+**This bot is FREE and open-source under Apache License 2.0 with Commons Clause.**
 
 ### If you are selling this bot:
 - You are **violating copyright law**
@@ -20,7 +20,7 @@ A free, open-source Discord bot that provides an interactive rules menu using Di
 - All sales are tracked and reported
 - GitHub commit history proves original authorship
 - Legal action will be taken against resellers
-- Software Freedom Conservancy assists with enforcement
+- Commons Clause specifically prohibits commercial sale
 
 **If you paid for this bot:** You were scammed. Report the seller and download the free version from the official repository.
 
@@ -199,9 +199,15 @@ If you find someone selling this bot, please report it by opening an issue on th
 
 ## ⚖️ Legal
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This software is licensed under the Apache License 2.0 with Commons Clause. You may use, modify, and redistribute this software for free, but you may NOT sell it or charge for services based on it.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+The Commons Clause specifically prohibits providing the software to third parties for a fee or other consideration. This includes:
+- Selling the bot or its code
+- Selling access to a hosted version
+- Charging for consulting/support services related to the bot
+- Any commercial use that derives value from the software
+
+For full license terms, see the [LICENSE](LICENSE) file.
 
 ---
 
