@@ -48,8 +48,8 @@ async function deployRulesMessage(channel) {
     const messageContent = await createRulesMessage();
 
     try {
-        // Try to find and edit existing message
-        if (config.messageId) {
+        // Try to find and edit existing message in the same channel
+        if (config.messageId && config.channelId === channel.id) {
             try {
                 const existingMessage = await channel.messages.fetch(config.messageId);
                 await existingMessage.edit(messageContent);
