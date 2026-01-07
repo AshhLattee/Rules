@@ -33,24 +33,24 @@ async function handleViewRules(interaction) {
         });
     }
 
-    const rulesText = category.rules.map((rule, i) => `${i + 1}. ${rule}`).join('\n');
+    const rulesText = category.rules.join('\n');
 
     const container = new ContainerBuilder()
         .setAccentColor(category.color || 0x5865F2);
     
-    // Add category label with thumbnail as section
-    container.addSectionComponents((section) => {
-        section.addTextDisplayComponents((text) =>
+    // Add category label with thumbnail if available
+    if (category.thumbnail) {
+        container.addSectionComponents((section) => {
+            section.addTextDisplayComponents((text) =>
+                text.setContent(`**${category.label}**`)
+            );
+            return section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(category.thumbnail));
+        });
+    } else {
+        container.addTextDisplayComponents((text) =>
             text.setContent(`**${category.label}**`)
         );
-        
-        // Add thumbnail if provided
-        if (category.thumbnail) {
-            section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(category.thumbnail));
-        }
-        
-        return section;
-    });
+    }
     
     container
         .addSeparatorComponents((separator) => separator)

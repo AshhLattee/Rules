@@ -23,19 +23,21 @@ async function createRulesMessage() {
     const container = new ContainerBuilder()
         .setAccentColor(0x5865F2);
     
-    // Add main message with optional image as section
-    container.addSectionComponents((section) => {
-        section.addTextDisplayComponents((text) =>
+    // Add main message (with or without image)
+    if (mainImage) {
+        // Use section with thumbnail if image provided
+        container.addSectionComponents((section) => {
+            section.addTextDisplayComponents((text) =>
+                text.setContent(mainMessage)
+            );
+            return section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(mainImage));
+        });
+    } else {
+        // Use plain text display if no image
+        container.addTextDisplayComponents((text) =>
             text.setContent(mainMessage)
         );
-        
-        // Add main image as thumbnail if provided
-        if (mainImage) {
-            section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(mainImage));
-        }
-        
-        return section;
-    });
+    }
     
     container.addSeparatorComponents((separator) => separator);
 
@@ -46,12 +48,7 @@ async function createRulesMessage() {
                 textDisplay.setContent(`**${cat.label}**`)
             );
             
-            // Add thumbnail if provided
-            if (cat.thumbnail) {
-                section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(cat.thumbnail));
-            }
-            
-            // Add button
+            // Always add button for categories
             return section.setButtonAccessory((button) =>
                 button
                     .setCustomId(`view_rules_${cat.id}`)

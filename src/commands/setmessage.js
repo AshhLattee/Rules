@@ -9,7 +9,9 @@ const {
     ModalBuilder, 
     TextInputBuilder, 
     TextInputStyle, 
-    ActionRowBuilder
+    ActionRowBuilder,
+    FileUploadBuilder,
+    LabelBuilder
 } = require('discord.js');
 
 module.exports = {
@@ -31,18 +33,20 @@ module.exports = {
             .setRequired(true)
             .setMaxLength(1000);
 
-        const imageInput = new TextInputBuilder()
+        const imageUpload = new FileUploadBuilder()
             .setCustomId('main_image')
-            .setLabel('Main Image URL (optional)')
-            .setStyle(TextInputStyle.Short)
-            .setPlaceholder('https://i.imgur.com/example.png')
-            .setRequired(false)
-            .setMaxLength(500);
+            .setRequired(false);
+
+        const imageLabel = new LabelBuilder()
+            .setLabel('Main Image (optional)')
+            .setDescription('Upload an image for the main message')
+            .setFileUploadComponent(imageUpload);
 
         modal.addComponents(
-            new ActionRowBuilder().addComponents(messageInput),
-            new ActionRowBuilder().addComponents(imageInput)
+            new ActionRowBuilder().addComponents(messageInput)
         );
+        
+        modal.addLabelComponents(imageLabel);
 
         await interaction.showModal(modal);
     }

@@ -11,7 +11,9 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    MessageFlags
+    MessageFlags,
+    FileUploadBuilder,
+    LabelBuilder
 } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 const { deployRulesMessage } = require('../utils/messageBuilder');
@@ -83,20 +85,21 @@ async function handleEditSelect(interaction, categoryId) {
         .setRequired(true)
         .setMaxLength(4000);
 
-    const thumbnailInput = new TextInputBuilder()
+    const thumbnailUpload = new FileUploadBuilder()
         .setCustomId('category_thumbnail')
-        .setLabel('Thumbnail URL (optional)')
-        .setStyle(TextInputStyle.Short)
-        .setPlaceholder('https://i.imgur.com/example.png')
-        .setValue(category.thumbnail || '')
-        .setRequired(false)
-        .setMaxLength(500);
+        .setRequired(false);
+
+    const thumbnailLabel = new LabelBuilder()
+        .setLabel('Thumbnail (optional)')
+        .setDescription('Upload new thumbnail or leave empty to keep current')
+        .setFileUploadComponent(thumbnailUpload);
 
     modal.addComponents(
         new ActionRowBuilder().addComponents(labelInput),
-        new ActionRowBuilder().addComponents(rulesInput),
-        new ActionRowBuilder().addComponents(thumbnailInput)
+        new ActionRowBuilder().addComponents(rulesInput)
     );
+    
+    modal.addLabelComponents(thumbnailLabel);
 
     await interaction.showModal(modal);
 }

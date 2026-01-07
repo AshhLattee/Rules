@@ -30,8 +30,9 @@ async function handleAddCategory(interaction) {
     const label = interaction.fields.getTextInputValue('category_label');
     const rulesText = interaction.fields.getTextInputValue('category_rules');
     
-    // Get thumbnail URL from text input
-    const thumbnail = interaction.fields.getTextInputValue('category_thumbnail') || null;
+    // Get uploaded thumbnail file
+    const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
+    const thumbnail = thumbnailFiles.size > 0 ? thumbnailFiles.first().url : null;
 
     // Check if category already exists
     const existing = rulesManager.getCategory(id);
@@ -87,9 +88,9 @@ async function handleEditCategory(interaction) {
     const label = interaction.fields.getTextInputValue('category_label');
     const rulesText = interaction.fields.getTextInputValue('category_rules');
     
-    // Get thumbnail URL from text input (if provided), otherwise keep existing
-    const thumbnailInput = interaction.fields.getTextInputValue('category_thumbnail');
-    const thumbnail = thumbnailInput ? thumbnailInput : category.thumbnail;
+    // Get uploaded thumbnail file (if any), otherwise keep existing
+    const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
+    const thumbnail = thumbnailFiles.size > 0 ? thumbnailFiles.first().url : category.thumbnail;
 
     const rules = rulesText.split('\n').filter(line => line.trim()).map(line => line.trim());
 
@@ -121,13 +122,14 @@ async function handleEditCategory(interaction) {
 async function handleSetMainMessage(interaction) {
     const mainMessage = interaction.fields.getTextInputValue('main_message');
     
-    // Get image URL from text input
-    const mainImage = interaction.fields.getTextInputValue('main_image') || null;
+    // Get uploaded image file (if any)
+    const imageFiles = interaction.fields.getUploadedFiles('main_image');
+    const config = rulesManager.getConfig();
+    const mainImage = imageFiles.size > 0 ? imageFiles.first().url : config.mainImage;
 
     rulesManager.setConfig({ mainMessage, mainImage });
 
     // Update the rules message
-    const config = rulesManager.getConfig();
     if (config.channelId) {
         try {
             const channel = await interaction.client.channels.fetch(config.channelId);
