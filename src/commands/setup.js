@@ -3,7 +3,7 @@
 // Licensed under GPL-3.0 - see LICENSE file
 // GitHub: https://github.com/AshhLattee/rules-menu-bot
 
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
 const { deployRulesMessage } = require('../utils/messageBuilder');
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     
     async execute(interaction) {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
         try {
             const message = await deployRulesMessage(interaction.channel);

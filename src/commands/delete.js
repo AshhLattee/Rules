@@ -7,7 +7,8 @@ const {
     SlashCommandBuilder, 
     PermissionFlagsBits, 
     StringSelectMenuBuilder, 
-    ActionRowBuilder 
+    ActionRowBuilder,
+    MessageFlags 
 } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 
@@ -23,7 +24,7 @@ module.exports = {
         if (categories.length === 0) {
             return await interaction.reply({
                 content: '❌ No categories exist to delete.',
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -44,7 +45,7 @@ module.exports = {
         await interaction.reply({
             content: '🗑️ Select a category to delete:',
             components: [row],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 };

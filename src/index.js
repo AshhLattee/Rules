@@ -3,7 +3,7 @@
 // Licensed under GPL-3.0 - see LICENSE file
 // GitHub: https://github.com/AshhLattee/rules-menu-bot
 
-const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, REST, Routes, Events, MessageFlags } = require('discord.js');
 const { readdirSync } = require('fs');
 const { join } = require('path');
 require('dotenv').config();
@@ -25,7 +25,7 @@ for (const file of commandFiles) {
 }
 
 // Ready event
-client.once('ready', async () => {
+client.once(Events.ClientReady, async () => {
     console.log(`✅ Logged in as ${client.user.tag}`);
     
     // Register slash commands
@@ -73,7 +73,7 @@ client.on('interactionCreate', async (interaction) => {
         }
     } catch (error) {
         console.error('Error handling interaction:', error);
-        const reply = { content: '❌ An error occurred!', ephemeral: true };
+        const reply = { content: '❌ An error occurred!', flags: MessageFlags.Ephemeral };
         if (interaction.replied || interaction.deferred) {
             await interaction.followUp(reply);
         } else {

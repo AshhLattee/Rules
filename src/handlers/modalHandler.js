@@ -7,7 +7,8 @@ const {
     ModalBuilder, 
     TextInputBuilder, 
     TextInputStyle, 
-    ActionRowBuilder 
+    ActionRowBuilder,
+    MessageFlags 
 } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 const { deployRulesMessage } = require('../utils/messageBuilder');
@@ -34,7 +35,7 @@ async function handleAddCategory(interaction) {
     if (existing) {
         return await interaction.reply({
             content: `❌ A category with ID \`${id}\` already exists!`,
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -66,7 +67,7 @@ async function handleAddCategory(interaction) {
 
     await interaction.reply({
         content: `✅ Category **${label}** added successfully! Use \`/setup\` to update the rules message.`,
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
     });
 }
 
@@ -77,7 +78,7 @@ async function handleEditCategory(interaction) {
     if (!category) {
         return await interaction.reply({
             content: '❌ Category not found!',
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -110,6 +111,6 @@ async function handleEditCategory(interaction) {
 
     await interaction.reply({
         content: `✅ Category **${label}** updated successfully!`,
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
     });
 }

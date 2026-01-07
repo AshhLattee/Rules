@@ -10,7 +10,8 @@ const {
     TextInputStyle, 
     ActionRowBuilder,
     ButtonBuilder,
-    ButtonStyle
+    ButtonStyle,
+    MessageFlags
 } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 const { deployRulesMessage } = require('../utils/messageBuilder');
@@ -35,7 +36,7 @@ async function handleRulesSelect(interaction, categoryId) {
     if (!category) {
         return await interaction.reply({
             content: '❌ Category not found!',
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -48,7 +49,7 @@ async function handleRulesSelect(interaction, categoryId) {
 
     await interaction.reply({
         embeds: [embed],
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
     });
 }
 
@@ -58,7 +59,7 @@ async function handleEditSelect(interaction, categoryId) {
     if (!category) {
         return await interaction.reply({
             content: '❌ Category not found!',
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 

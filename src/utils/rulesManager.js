@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_FILE = path.join(__dirname, '../data/rules.json');
+const DATA_FILE = path.join(__dirname, '../../data/rules.json');
 
 class RulesManager {
     constructor() {
