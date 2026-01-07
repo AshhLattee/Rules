@@ -18,27 +18,43 @@ async function createRulesMessage() {
     }
 
     const mainMessage = config.mainMessage || '**📜 Server Rules**\n\nClick a button below to view the rules for each category.';
+    const mainImage = config.mainImage;
 
     const container = new ContainerBuilder()
         .setAccentColor(0x5865F2)
         .addTextDisplayComponents((text) =>
             text.setContent(mainMessage)
         );
+    
+    // Add image if provided (as a media gallery component)
+    if (mainImage) {
+        container.addMediaGalleryComponents((gallery) => 
+            gallery.addMediaComponents((media) => media.setURL(mainImage))
+        );
+    }
+    
+    container.addSeparatorComponents((separator) => separator);
 
     // Add each category as a section with a button
     categories.forEach((cat, index) => {
-        container.addSectionComponents((section) =>
-            section
-                .addTextDisplayComponents((textDisplay) =>
-                    textDisplay.setContent(`**${cat.label}**`)
-                )
-                .setButtonAccessory((button) =>
-                    button
-                        .setCustomId(`view_rules_${cat.id}`)
-                        .setLabel('View Rules')
-                        .setStyle(ButtonStyle.Primary)
-                )
-        );
+        container.addSectionComponents((section) => {
+            section.addTextDisplayComponents((textDisplay) =>
+                textDisplay.setContent(`**${cat.label}**`)
+            );
+            
+            // Add thumbnail if provided
+            if (cat.thumbnail) {
+                section.setThumbnailAccessory((thumbnail) => thumbnail.setURL(cat.thumbnail));
+            }
+            
+            // Add button
+            return section.setButtonAccessory((button) =>
+                button
+                    .setCustomId(`view_rules_${cat.id}`)
+                    .setLabel('View Rules')
+                    .setStyle(ButtonStyle.Primary)
+            );
+        });
         
         // Add separator after each category except the last one
         if (index < categories.length - 1) {

@@ -11,7 +11,9 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    MessageFlags
+    MessageFlags,
+    FileUploadBuilder,
+    LabelBuilder
 } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 const { deployRulesMessage } = require('../utils/messageBuilder');
@@ -83,10 +85,23 @@ async function handleEditSelect(interaction, categoryId) {
         .setRequired(true)
         .setMaxLength(4000);
 
+    const thumbnailUpload = new FileUploadBuilder()
+        .setCustomId('category_thumbnail')
+        .setRequired(false)
+        .setMinValues(0)
+        .setMaxValues(1);
+
+    const thumbnailLabel = new LabelBuilder()
+        .setLabel('Thumbnail (optional)')
+        .setDescription('Upload new thumbnail or leave empty to keep current')
+        .setFileUploadComponent(thumbnailUpload);
+
     modal.addComponents(
         new ActionRowBuilder().addComponents(labelInput),
         new ActionRowBuilder().addComponents(rulesInput)
     );
+    
+    modal.addLabelComponents(thumbnailLabel);
 
     await interaction.showModal(modal);
 }

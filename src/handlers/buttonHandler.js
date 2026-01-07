@@ -1,9 +1,10 @@
 // Rules Menu Bot - Discord Rules Management System
-// Copyright (C) 2026 AshhLattee
+// Copyright (C) 2026 AshhLattee (AI-Augmented Engineer)
 // Licensed under GPL-3.0 - see LICENSE file
 // GitHub: https://github.com/AshhLattee/rules-menu-bot
+// Developed with AI assistance
 
-const { EmbedBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, MessageFlags } = require('discord.js');
 const rulesManager = require('../utils/rulesManager');
 const { deployRulesMessage } = require('../utils/messageBuilder');
 
@@ -32,16 +33,28 @@ async function handleViewRules(interaction) {
         });
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(category.label)
-        .setDescription(category.rules.map((rule, i) => `${i + 1}. ${rule}`).join('\n'))
-        .setColor(category.color || 0x5865F2)
-        .setFooter({ text: 'Server Rules' })
-        .setTimestamp();
+    const rulesText = category.rules.map((rule, i) => `${i + 1}. ${rule}`).join('\n');
+
+    const container = new ContainerBuilder()
+        .setAccentColor(category.color || 0x5865F2)
+        .addTextDisplayComponents((text) =>
+            text.setContent(`**${category.label}**`)
+        )
+        .addSeparatorComponents((separator) => separator)
+        .addTextDisplayComponents((text) =>
+            text.setContent(rulesText)
+        );
+    
+    // Add thumbnail if provided (as a media gallery)
+    if (category.thumbnail) {
+        container.addMediaGalleryComponents((gallery) => 
+            gallery.addMediaComponents((media) => media.setURL(category.thumbnail))
+        );
+    }
 
     await interaction.reply({
-        embeds: [embed],
-        flags: MessageFlags.Ephemeral
+        components: [container],
+        flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2
     });
 }
 
