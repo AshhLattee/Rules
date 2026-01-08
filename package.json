@@ -1,5 +1,5 @@
 {
-  "name": "ashhLattee-rules",
+  "name": "ashhlattee-rules",
   "version": "1.0.0",
   "description": "A Discord bot with interactive rules menu using Components v2",
   "main": "src/index.js",
