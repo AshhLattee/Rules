@@ -14,6 +14,10 @@ class RulesManager {
     }
 
     ensureDataFile() {
+        const dataDir = path.join(__dirname, '../../data');
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
         if (!fs.existsSync(DATA_FILE)) {
             const defaultData = {
                 categories: [],
@@ -27,6 +31,7 @@ class RulesManager {
     }
 
     loadData() {
+        this.ensureDataFile();
         const data = fs.readFileSync(DATA_FILE, 'utf-8');
         return JSON.parse(data);
     }

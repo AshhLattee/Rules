@@ -32,7 +32,7 @@ async function handleAddCategory(interaction) {
     
     // Get uploaded thumbnail file
     const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
-    const thumbnail = thumbnailFiles.size > 0 ? thumbnailFiles.first().url : null;
+    const thumbnail = thumbnailFiles && thumbnailFiles.size > 0 ? thumbnailFiles.first().url : null;
 
     // Check if category already exists
     const existing = rulesManager.getCategory(id);
@@ -88,9 +88,9 @@ async function handleEditCategory(interaction) {
     const label = interaction.fields.getTextInputValue('category_label');
     const rulesText = interaction.fields.getTextInputValue('category_rules');
     
-    // Get uploaded thumbnail file (if any), otherwise keep existing
+    // Get uploaded thumbnail file (if any), otherwise clear it
     const thumbnailFiles = interaction.fields.getUploadedFiles('category_thumbnail');
-    const thumbnail = thumbnailFiles.size > 0 ? thumbnailFiles.first().url : category.thumbnail;
+    const thumbnail = thumbnailFiles && thumbnailFiles.size > 0 ? thumbnailFiles.first().url : null;
 
     const rules = rulesText.trim();
 
@@ -122,14 +122,14 @@ async function handleEditCategory(interaction) {
 async function handleSetMainMessage(interaction) {
     const mainMessage = interaction.fields.getTextInputValue('main_message');
     
-    // Get uploaded image file (if any)
+    // Get uploaded image file (if any), otherwise clear it
     const imageFiles = interaction.fields.getUploadedFiles('main_image');
-    const config = rulesManager.getConfig();
-    const mainImage = imageFiles.size > 0 ? imageFiles.first().url : config.mainImage;
+    const mainImage = imageFiles && imageFiles.size > 0 ? imageFiles.first().url : null;
 
     rulesManager.setConfig({ mainMessage, mainImage });
 
     // Update the rules message
+    const config = rulesManager.getConfig();
     if (config.channelId) {
         try {
             const channel = await interaction.client.channels.fetch(config.channelId);

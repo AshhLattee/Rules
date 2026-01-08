@@ -88,6 +88,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&permissions=27487822137
 | `/add` | Add new category (supports markdown & thumbnails) |
 | `/edit` | Edit existing category |
 | `/delete` | Delete category |
+| `/reset` | Reset all data (DANGER: Cannot be undone!) |
 
 **All commands are admin-only and rules auto-update on changes.**
 

@@ -18,6 +18,10 @@ module.exports = {
             await handleConfirmDelete(interaction);
         } else if (customId === 'cancel_delete') {
             await handleCancelDelete(interaction);
+        } else if (customId === 'confirm_reset') {
+            await handleConfirmReset(interaction);
+        } else if (customId === 'cancel_reset') {
+            await handleCancelReset(interaction);
         }
     }
 };
@@ -97,6 +101,29 @@ async function handleConfirmDelete(interaction) {
 async function handleCancelDelete(interaction) {
     await interaction.update({
         content: '❌ Deletion cancelled.',
+        components: []
+    });
+}
+
+async function handleConfirmReset(interaction) {
+    const fs = require('fs');
+    const path = require('path');
+    const DATA_FILE = path.join(__dirname, '../../data/rules.json');
+
+    // Delete the data file
+    if (fs.existsSync(DATA_FILE)) {
+        fs.unlinkSync(DATA_FILE);
+    }
+
+    await interaction.update({
+        content: '✅ **All data has been reset!**\n\nAll categories and configuration have been deleted. Use `/add` to create new categories and `/setup` to deploy a new message.',
+        components: []
+    });
+}
+
+async function handleCancelReset(interaction) {
+    await interaction.update({
+        content: '❌ Reset cancelled. Your data is safe.',
         components: []
     });
 }
