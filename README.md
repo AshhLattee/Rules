@@ -85,7 +85,7 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&permissions=27487822137
 |---------|-------------|
 | `/setup` | Deploy or update rules message |
 | `/setmessage` | Set main message text and image |
-| `/add` | Add new category (supports markdown & thumbnails) |
+| `/add` | Add new category (supports full markdown) |
 | `/edit` | Edit existing category |
 | `/delete` | Delete category |
 | `/reset` | Reset all data (DANGER: Cannot be undone!) |
