@@ -1,5 +1,14 @@
 [![License: Apache 2.0 + Commons Clause](https://img.shields.io/badge/License-Apache%202.0%20with%20Commons%20Clause-blue)](LICENSE)
+
 # Rules Bot
+
+> [!NOTE]
+> **A Personal Note from AshhLattee**
+> After 6 years of pouring my heart into code, I've decided to close this chapter and retire from development. It's been an incredible journey, and I'm deeply grateful for everyone who has been a part of it. My focus has now shifted towards the world of Minecraft, where I'm finding new ways to create.
+>
+> While I’m stepping away and this project will no longer be maintained, it is **not** retired—it remains here for you to use, fork, and build upon. Development has stopped, but the work remains for the community. Thank you for being part of my story. 🌙
+>
+> For the full journey, feel free to visit my [GitHub profile](https://github.com/AshhLattee).
 
 A free, source-available Discord bot that provides an interactive rules menu using Discord's Components v2. Built with discord.js and fully customizable through slash commands.
 
@@ -10,11 +19,13 @@ This bot is **source-available** and licensed under **Apache License 2.0 with Co
 The Commons Clause **explicitly prohibits** selling the bot (or offering it as a paid/hosted service) where its main value comes from this code — even with minor changes like renaming/reskinning.
 
 If you're selling copies or "premium" versions of this bot:
+
 - You're exceeding the license grant → violating the terms.
 - This may constitute copyright infringement (especially if notices/attribution are removed).
 - Your permission to use/distribute the code is limited or revoked under the license.
 
 We take this seriously:
+
 - GitHub commit history + timestamps prove original authorship (AshhLattee, 2026).
 - Public callouts + reports to marketplaces/platforms happen when violations are found.
 - Cease & desist letters will be sent to clear violators.
@@ -42,11 +53,13 @@ Fork, modify, learn — just don't resell lazy copies. Thanks for respecting the
 ## 🚀 Quick Start
 
 ### 1. Get Bot Token
+
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Create New Application → Bot tab → Add Bot
 3. Copy your bot token and Application ID
 
 ### 2. Setup & Run
+
 ```bash
 git clone https://github.com/AshhLattee/AshhLattee-Rules.git
 cd AshhLattee-Rules
@@ -55,23 +68,28 @@ cp .env.example .env
 ```
 
 Edit `.env`:
+
 ```env
 DISCORD_TOKEN=your_bot_token
 CLIENT_ID=your_application_id
 ```
 
 Start the bot:
+
 ```bash
 npm start
 ```
 
 ### 3. Invite Bot
+
 Use this URL (replace `CLIENT_ID`):
+
 ```
 https://discord.com/oauth2/authorize?client_id=CLIENT_ID&permissions=274878221376&scope=bot%20applications.commands
 ```
 
 ### 4. Deploy & Customize
+
 ```
 /setup          # Deploy rules message in current channel
 /setmessage     # Customize main text and upload thumbnail
@@ -82,14 +100,14 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&permissions=27487822137
 
 ## 📖 Commands
 
-| Command | Description |
-|---------|-------------|
-| `/setup` | Deploy or update rules message |
-| `/setmessage` | Set main message text and image |
-| `/add` | Add new category (supports full markdown) |
-| `/edit` | Edit existing category |
-| `/delete` | Delete category |
-| `/reset` | Reset all data (DANGER: Cannot be undone!) |
+| Command       | Description                                |
+| ------------- | ------------------------------------------ |
+| `/setup`      | Deploy or update rules message             |
+| `/setmessage` | Set main message text and image            |
+| `/add`        | Add new category (supports full markdown)  |
+| `/edit`       | Edit existing category                     |
+| `/delete`     | Delete category                            |
+| `/reset`      | Reset all data (DANGER: Cannot be undone!) |
 
 **All commands are admin-only and rules auto-update on changes.**
 
@@ -124,10 +142,11 @@ Contributions welcome! Fork, modify, and submit PRs.
 ## 👤 Author
 
 **AshhLattee** - AI-Augmented Engineer
+
 - GitHub: [@AshhLattee](https://github.com/AshhLattee)
 - Discord: AshhLattee
 
-*This project was developed with AI assistance as part of modern AI-augmented engineering practices.*
+_This project was developed with AI assistance as part of modern AI-augmented engineering practices._
 
 ## 🐛 Report Violations
 
@@ -138,6 +157,7 @@ If you find someone selling this bot, please report it by opening an issue on th
 This software is licensed under the Apache License 2.0 with Commons Clause. You may use, modify, and redistribute this software for free, but you may NOT sell it or charge for services based on it.
 
 The Commons Clause specifically prohibits providing the software to third parties for a fee or other consideration. This includes:
+
 - Selling the bot or its code
 - Selling access to a hosted version
 - Charging for consulting/support services related to the bot
@@ -149,4 +169,4 @@ For full license terms, see the [LICENSE](LICENSE) file.
 
 **Made with ❤️ by AshhLattee (AI-Augmented Engineer) | Free Forever | source-available**
 
-*Developed with AI assistance*
+_Developed with AI assistance_
